@@ -18,6 +18,7 @@ namespace PRSCapstoneDB.Data
         public DbSet<PRSCapstoneDB.Models.User> Users { get; set; }
         public DbSet<PRSCapstoneDB.Models.Vendor> Vendors { get; set; }
         public DbSet<PRSCapstoneDB.Models.Product> Products { get; set; }
+        public DbSet<PRSCapstoneDB.Models.Request> Requests { get; set; }
 
         protected override void OnModelCreating (ModelBuilder builder)
         {
@@ -37,6 +38,7 @@ namespace PRSCapstoneDB.Data
             });
         }
 
+        public DbSet<PRSCapstoneDB.Models.RequestLine> RequestLine { get; set; }
 
     }
 }

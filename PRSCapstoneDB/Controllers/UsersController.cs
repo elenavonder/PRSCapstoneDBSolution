@@ -116,7 +116,7 @@ namespace PRSCapstoneDB.Controllers
         /// a user instance if the username and password combination
         /// is found, else return null
         /// </returns>
-        public User Login(string username, string password)
+        public async Task<ActionResult<User>> Login(string username, string password)
         {
             return _context.Users.SingleOrDefault(u => u.Username == username && u.Password == password);
         } 
