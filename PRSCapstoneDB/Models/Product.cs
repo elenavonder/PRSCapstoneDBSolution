@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,7 +21,7 @@ namespace PRSCapstoneDB.Models
         public decimal Price { get; set; }
         [Required]
         [StringLength(30)]
-        public string Unit { get; set; }
+        public string Unit { get; set; } = "each";
         [StringLength(255)]
         public string PhotoPath { get; set; }
         public int VendorId { get; set; }
