@@ -106,20 +106,11 @@ namespace PRSCapstoneDB.Controllers
         {
             return _context.Users.Any(e => e.Id == id);
         }
-        /// <summary>
-        /// Returns a user is username and password are found in the
-        /// users table of the database
-        /// </summary>
-        /// <param name="username">username as a string</param>
-        /// <param name="password">password as a string</param>
-        /// <returns>
-        /// a user instance if the username and password combination
-        /// is found, else return null
-        /// </returns>
+        
+        [HttpGet]
         public async Task<ActionResult<User>> Login(string username, string password)
         {
             return await _context.Users.SingleOrDefaultAsync(u => u.Username == username && u.Password == password);
-            
         } 
     }
 }

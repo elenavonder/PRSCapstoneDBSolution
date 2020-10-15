@@ -21,8 +21,23 @@ namespace PRSCapstoneDB.Controllers
             _context = context;
         }
 
-        // GET: api/RequestLines
-        [HttpGet]
+        [HttpPut("Calculate Total")]
+        public async Task<IActionResult> RecalculateRequestTotal(int id)
+        {
+            var request = _context.Requests.Find(id);
+            var reqTotal = (from r in _context.RequestLines.ToList()
+                            join p in _context.Products.ToList()
+                            on r.ProductId equals p.Id
+                            where r.RequestId == id
+                            select new
+                            {
+                                LineTotal = r.Quantity * p.Price
+                            }).Sum(t => t.LineTotal);
+            request.Total = reqTotal;
+            await _context.SaveChanges();
+        }
+            // GET: api/RequestLines
+            [HttpGet]
         public async Task<ActionResult<IEnumerable<RequestLine>>> GetRequestLine()
         {
             return await _context.RequestLines.ToListAsync();

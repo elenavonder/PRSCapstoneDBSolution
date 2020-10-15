@@ -21,68 +21,33 @@ namespace PRSCapstoneDB.Controllers
             _context = context;
         }
 
-        public bool RecalculateRequestTotal(int Id)
+        
+        // PUT: api/Request/review
+        [HttpPut("review")]
+        public async Task<IActionResult> ReviewRequest(int id, Request request)
         {
-            var request = _context.Requests.Find(Id);
-            var reqTotal = (from r in _context.RequestLines.ToList()
-                            join p in _context.Products.ToList()
-                            on r.ProductId equals p.Id
-                            where r.RequestId == Id
-                            select new
-                            {
-                                LineTotal = r.Quantity * p.Price
-                            }).Sum(t => t.LineTotal);
-            request.Total = reqTotal;
-            _context.SaveChanges();
-            return true;
-        }
-        /// <summary>
-        /// Reviews the request for the owner(user)
-        /// status is set to APPROVED if Total <= 50
-        /// else status is set to REVIEW
-        /// </summary>
-        /// <param name="request">A request</param>
-        /// <returns>true is successful; else false</returns>
-        public bool ReviewRequest(Request request)
-        {
-            if (request.Total <= 50)
-            {
-                request.Status = "APPROVED";
-            }
-            else
-            {
-                request.Status = "REVIEWED";
-            }
-            _context.SaveChanges();
-            return true;
+            request.Status = request.Total <= 50 ? "APPROVED" : "REVIEW";
+            return await PutRequest(id, request);
         }
 
-        public List <Request> GetRequestsInReview()
+        [HttpPut("review")]
+        public async Task<IActionResult> GetRequestsInReview(int id, Request request)
         {
-            return _context.Requests.Where(r => r.Status == "REVIEW").ToList(); 
+            return await _context.Request.Where(r => r.Status == "REVIEW").ToList();
         }
 
-        /// <summary>
-        /// Sets the status of request to APPROVED
-        /// </summary>
-        /// <param name="request">a single request</param>
-        /// <returns>true if successful; else false</returns>
-        public bool SetToApproved(Request request)
+        [HttpPut("approve")]
+        public async Task<IActionResult> SetToApproved(int id, Request request)
         {
             request.Status = "APPROVED";
-            _context.SaveChanges();
-            return true;
+            return await PutRequest(id, request);
         }
-        /// <summary>
-        /// Sets the status of request to REJECTED
-        /// </summary>
-        /// <param name="request">a single request</param>
-        /// <returns>true if successful; else false</returns>
-        public bool SetToRejected(Request request)
+    
+        [HttpPut("Rejected")]
+        public async Task<IActionResult> SetToRejected(int id, Request request)
         {
-            request.Status = "REJECTED";
-            _context.SaveChanges();
-            return true;
+           request.Status = "REJECTED";
+           return await PutRequest(id, request);
         }
 
 
