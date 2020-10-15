@@ -21,16 +21,10 @@ namespace PRSCapstoneDB.Controllers
             _context = context;
         }
 
-
-        public List <Request> GetRequestsInReview()
-        {
-            return _context.Requests.Where(r => r.Status == "REVIEW").ToList(); 
-        }
-
         public bool RecalculateRequestTotal(int Id)
         {
             var request = _context.Requests.Find(Id);
-            var reqTotal = (from r in _context.RequestLine.ToList()
+            var reqTotal = (from r in _context.RequestLines.ToList()
                             join p in _context.Products.ToList()
                             on r.ProductId equals p.Id
                             where r.RequestId == Id
@@ -63,6 +57,11 @@ namespace PRSCapstoneDB.Controllers
             return true;
         }
 
+        public List <Request> GetRequestsInReview()
+        {
+            return _context.Requests.Where(r => r.Status == "REVIEW").ToList(); 
+        }
+
         /// <summary>
         /// Sets the status of request to APPROVED
         /// </summary>
@@ -70,9 +69,9 @@ namespace PRSCapstoneDB.Controllers
         /// <returns>true if successful; else false</returns>
         public bool SetToApproved(Request request)
         {
-            request.Status = "APPROVED";//changes the status in C#
-            _context.SaveChanges();//its just floating in here until this statement then its saved into the database
-            return true;//return is for us to see it on our end to see if it worked
+            request.Status = "APPROVED";
+            _context.SaveChanges();
+            return true;
         }
         /// <summary>
         /// Sets the status of request to REJECTED
@@ -82,7 +81,7 @@ namespace PRSCapstoneDB.Controllers
         public bool SetToRejected(Request request)
         {
             request.Status = "REJECTED";
-            _context.SaveChanges();//puts data in database
+            _context.SaveChanges();
             return true;
         }
 

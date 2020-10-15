@@ -25,14 +25,14 @@ namespace PRSCapstoneDB.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RequestLine>>> GetRequestLine()
         {
-            return await _context.RequestLine.ToListAsync();
+            return await _context.RequestLines.ToListAsync();
         }
 
         // GET: api/RequestLines/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RequestLine>> GetRequestLine(int id)
         {
-            var requestLine = await _context.RequestLine.FindAsync(id);
+            var requestLine = await _context.RequestLines.FindAsync(id);
 
             if (requestLine == null)
             {
@@ -80,7 +80,7 @@ namespace PRSCapstoneDB.Controllers
         [HttpPost]
         public async Task<ActionResult<RequestLine>> PostRequestLine(RequestLine requestLine)
         {
-            _context.RequestLine.Add(requestLine);
+            _context.RequestLines.Add(requestLine);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRequestLine", new { id = requestLine.Id }, requestLine);
@@ -90,13 +90,13 @@ namespace PRSCapstoneDB.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<RequestLine>> DeleteRequestLine(int id)
         {
-            var requestLine = await _context.RequestLine.FindAsync(id);
+            var requestLine = await _context.RequestLines.FindAsync(id);
             if (requestLine == null)
             {
                 return NotFound();
             }
 
-            _context.RequestLine.Remove(requestLine);
+            _context.RequestLines.Remove(requestLine);
             await _context.SaveChangesAsync();
 
             return requestLine;
@@ -104,7 +104,7 @@ namespace PRSCapstoneDB.Controllers
 
         private bool RequestLineExists(int id)
         {
-            return _context.RequestLine.Any(e => e.Id == id);
+            return _context.RequestLines.Any(e => e.Id == id);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace PRSCapstoneDB.Data
         public DbSet<PRSCapstoneDB.Models.Vendor> Vendors { get; set; }
         public DbSet<PRSCapstoneDB.Models.Product> Products { get; set; }
         public DbSet<PRSCapstoneDB.Models.Request> Requests { get; set; }
+        public DbSet<PRSCapstoneDB.Models.RequestLine> RequestLines { get; set; }
 
         protected override void OnModelCreating (ModelBuilder builder)
         {
@@ -37,8 +38,6 @@ namespace PRSCapstoneDB.Data
                 e.HasIndex(x => x.PartNbr).IsUnique();
             });
         }
-
-        public DbSet<PRSCapstoneDB.Models.RequestLine> RequestLine { get; set; }
 
     }
 }
