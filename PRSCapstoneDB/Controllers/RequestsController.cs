@@ -20,27 +20,25 @@ namespace PRSCapstoneDB.Controllers
         {
             _context = context;
         }
-
         
-        // PUT: api/Requests/Reviewed
-        [HttpPut("Reviewed")]
+        // PUT: api/Requests/Review/id
+        [HttpPut("Review/{id}")]
         public async Task<IActionResult> ReviewRequest(int id, Request request)
         {
             request.Status = request.Total <= 50 ? "APPROVED" : "REVIEW";
             return await PutRequest(id, request);
         }
 
-
-        // PUT: api/Requests/Approved
-        [HttpPut("Approved")]
+        // PUT: api/Requests/Approve/id
+        [HttpPut("Approve/{id}")]
         public async Task<IActionResult> SetToApproved(int id, Request request)
         {
             request.Status = "APPROVED";
             return await PutRequest(id, request);
         }
     
-        // PUT: api/Requests/Rejected
-        [HttpPut("Rejected")]
+        // PUT: api/Requests/Reject/id
+        [HttpPut("Reject/{id}")]
         public async Task<IActionResult> SetToRejected(int id, Request request)
         {
            request.Status = "REJECTED";

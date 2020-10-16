@@ -21,8 +21,6 @@ namespace PRSCapstoneDB.Controllers
             _context = context;
         }
 
-        // PUT: api/RequestTotal
-        [HttpPut("Calculate Total")]
         private async Task<ActionResult<IEnumerable<Request>>> RecalculateRequestTotal(int id)
         {
             var request = _context.Requests.Find(id);
@@ -38,8 +36,9 @@ namespace PRSCapstoneDB.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-            // GET: api/RequestLines
-            [HttpGet]
+
+        // GET: api/RequestLines
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<RequestLine>>> GetRequestLine()
         {
             return await _context.RequestLines.ToListAsync();
