@@ -28,7 +28,7 @@ namespace PRSCapstoneDB.Models
         public decimal Total { get; set; } = 0;
         public int UserId { get; set; }
         public virtual User User { get; set; }
-        public virtual RequestLine RequestLine { get; set; }
+        public virtual IEnumerable<RequestLine> RequestLine { get; set; }
 
         public Request()
         {
