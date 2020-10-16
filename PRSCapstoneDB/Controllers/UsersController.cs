@@ -107,7 +107,7 @@ namespace PRSCapstoneDB.Controllers
             return _context.Users.Any(e => e.Id == id);
         }
         
-        [HttpGet]
+        [HttpGet("username/password")]
         public async Task<ActionResult<User>> Login(string username, string password)
         {
             return await _context.Users.SingleOrDefaultAsync(u => u.Username == username && u.Password == password);

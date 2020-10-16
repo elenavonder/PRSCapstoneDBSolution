@@ -22,27 +22,24 @@ namespace PRSCapstoneDB.Controllers
         }
 
         
-        // PUT: api/Request/review
-        [HttpPut("review")]
+        // PUT: api/Requests/Reviewed
+        [HttpPut("Reviewed")]
         public async Task<IActionResult> ReviewRequest(int id, Request request)
         {
             request.Status = request.Total <= 50 ? "APPROVED" : "REVIEW";
             return await PutRequest(id, request);
         }
 
-        [HttpPut("review")]
-        public async Task<IActionResult> GetRequestsInReview(int id, Request request)
-        {
-            return await _context.Request.Where(r => r.Status == "REVIEW").ToList();
-        }
 
-        [HttpPut("approve")]
+        // PUT: api/Requests/Approved
+        [HttpPut("Approved")]
         public async Task<IActionResult> SetToApproved(int id, Request request)
         {
             request.Status = "APPROVED";
             return await PutRequest(id, request);
         }
     
+        // PUT: api/Requests/Rejected
         [HttpPut("Rejected")]
         public async Task<IActionResult> SetToRejected(int id, Request request)
         {
@@ -50,10 +47,16 @@ namespace PRSCapstoneDB.Controllers
            return await PutRequest(id, request);
         }
 
+        // GET: api/Requests/Review
+        [HttpGet("Review")]
+        public async Task<ActionResult<IEnumerable<Request>>> GetRequestsInReview()
+        {
+            return await _context.Requests.Where(r => r.Status == "REVIEW").ToListAsync();
+        }
 
         // GET: api/Requests
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Request>>> GetRequest()
+        public async Task<ActionResult<IEnumerable<Request>>> GetRequests()
         {
             return await _context.Requests.ToListAsync();
         }
