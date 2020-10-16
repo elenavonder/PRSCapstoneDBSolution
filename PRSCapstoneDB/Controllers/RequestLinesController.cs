@@ -41,14 +41,18 @@ namespace PRSCapstoneDB.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RequestLine>>> GetRequestLine()
         {
-            return await _context.RequestLines.ToListAsync();
+            return await _context.RequestLines
+                                 .Include(p => p.product)
+                                 .ToListAsync(); ;
         }
 
         // GET: api/RequestLines/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RequestLine>> GetRequestLine(int id)
         {
-            var requestLine = await _context.RequestLines.FindAsync(id);
+            var requestLine = await _context.RequestLines
+                                            .Include(p => p.product)
+                                            .SingleOrDefaultAsync(p => p.Id == id);
 
             if (requestLine == null)
             {
