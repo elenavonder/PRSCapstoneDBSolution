@@ -21,7 +21,7 @@ namespace PRSCapstoneDB.Controllers
             _context = context;
         }
 
-        private async Task<ActionResult<IEnumerable<Request>>> RecalculateRequestTotal(int id)
+        private async Task<IActionResult> RecalculateRequestTotal(int id)
         {
             var request = _context.Requests.Find(id);
             var reqTotal = (from r in _context.RequestLines.ToList()
