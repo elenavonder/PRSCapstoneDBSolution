@@ -111,7 +111,12 @@ namespace PRSCapstoneDB.Controllers
         [HttpGet("{username}/{password}")]
         public async Task<ActionResult<User>> Login(string username, string password)
         {
-            return await _context.Users.SingleOrDefaultAsync(u => u.Username == username && u.Password == password);
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Username == username && u.Password == password);
+            if(user == null)
+            {
+                return NotFound();
+            }
+            return user;
         } 
     }
 }
