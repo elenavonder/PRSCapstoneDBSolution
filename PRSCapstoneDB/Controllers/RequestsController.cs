@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using PRSCapstoneDB.Data;
 using PRSCapstoneDB.Models;
@@ -20,7 +21,7 @@ namespace PRSCapstoneDB.Controllers
         {
             _context = context;
         }
-        
+
         // PUT: api/Requests/Review/id
         [HttpPut("Review/{id}")]
         public async Task<IActionResult> ReviewRequest(int id, Request request)
@@ -36,20 +37,20 @@ namespace PRSCapstoneDB.Controllers
             request.Status = "APPROVED";
             return await PutRequest(id, request);
         }
-    
+
         // PUT: api/Requests/Reject/id
         [HttpPut("Reject/{id}")]
         public async Task<IActionResult> SetToRejected(int id, Request request)
         {
-           request.Status = "REJECTED";
-           return await PutRequest(id, request);
+            request.Status = "REJECTED";
+            return await PutRequest(id, request);
         }
 
-        // GET: api/Requests/Review
-        [HttpGet("Review")]
-        public async Task<ActionResult<IEnumerable<Request>>> GetRequestsInReview()
+        // GET: api/Requests/Review/id
+        [HttpGet("Review/{userId}")]
+        public async Task<ActionResult<IEnumerable<Request>>> GetRequestsInReview(int userId)
         {
-            return await _context.Requests.Where(r => r.Status == "REVIEW").ToListAsync();
+            return await _context.Requests.Where(r => r.Status == "REVIEW" && r.UserId != userId).ToListAsync();
         }
 
         // GET: api/Requests
