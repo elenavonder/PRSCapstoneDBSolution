@@ -50,7 +50,9 @@ namespace PRSCapstoneDB.Controllers
         [HttpGet("Review/{userId}")]
         public async Task<ActionResult<IEnumerable<Request>>> GetRequestsInReview(int userId)
         {
-            return await _context.Requests.Where(r => r.Status == "REVIEW" && r.UserId != userId).ToListAsync();
+            return await _context.Requests.Include(u=>u.User)
+                                          .Where(r => r.Status == "REVIEW" && r.UserId != userId)
+                                          .ToListAsync();
         }
 
         // GET: api/Requests
@@ -68,6 +70,8 @@ namespace PRSCapstoneDB.Controllers
         {
             var request = await _context.Requests
                                         .Include(u => u.User)
+                                        .Include(u => u.RequestLines)
+//                                        .ThenInclude(u => u.product)
                                         .SingleOrDefaultAsync(p => p.Id == id);
 
             if (request == null)
