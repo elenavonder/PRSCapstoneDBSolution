@@ -78,6 +78,7 @@ namespace PRSCapstoneDB.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                await RecalculateRequestTotal(requestLine.RequestId);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -102,6 +103,7 @@ namespace PRSCapstoneDB.Controllers
         {
             _context.RequestLines.Add(requestLine);
             await _context.SaveChangesAsync();
+            await RecalculateRequestTotal(requestLine.RequestId);
 
             return CreatedAtAction("GetRequestLine", new { id = requestLine.Id }, requestLine);
         }
@@ -118,6 +120,7 @@ namespace PRSCapstoneDB.Controllers
 
             _context.RequestLines.Remove(requestLine);
             await _context.SaveChangesAsync();
+            await RecalculateRequestTotal(requestLine.RequestId);
 
             return requestLine;
         }

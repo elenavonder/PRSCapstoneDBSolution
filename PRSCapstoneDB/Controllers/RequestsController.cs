@@ -71,7 +71,7 @@ namespace PRSCapstoneDB.Controllers
             var request = await _context.Requests
                                         .Include(u => u.User)
                                         .Include(u => u.RequestLines)
-//                                        .ThenInclude(u => u.product)
+                                       .ThenInclude(u => u.product)
                                         .SingleOrDefaultAsync(p => p.Id == id);
 
             if (request == null)
